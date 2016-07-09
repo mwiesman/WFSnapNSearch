@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+  <nav>
+    <div class="nav-wrapper">
+      <div class="col s12">
+        <a class="breadcrumb"><i class="material-icons" style="padding-left:10px">home</i></a>
+        <a href="{{url_for('main.main_route')}}" class="breadcrumb">WF Snap N Search</a>
+        {% if options.recommend %}
+          <a href="{{url_for('recommender.rec_route')}}" class="breadcrumb">Recommender</a>
+          <a class="breadcrumb">Reccomendations</a>
+        {% else %}
+          <a class="breadcrumb">Recommender</a>
+        {% endif %}
+      </div>
+    </div>
+  </nav>
+
+  {% if options.recommend %}
+    {% for rec in rec_list %}
+      <a href="{{rec[1]}}"> Recommendended {{loc}} {{rec}} </a>
+    {% endfor %}
+    <form action="{{url_for('recommender.rec_route')}}">
+      <input type="submit" value="Return To Recommender">
+    </form>
+  {% else %}
+    <table>
+    <tr>
+        <!-- add a photo action, need to get the photo uploaded -->
+        <form action="{{url_for('recommender.rec_rec_route')}}" method="POST" enctype=multipart/form-data >
+          <input type="hidden" name="op" value="img_search">
+          <div class="file-field input-field">
+        		<div class="btn">
+          		<span>Select Photo <i class="material-icons">aspect_ratio</i></span>
+          		<input type="file" name="pic" id="file_input" onchange="readURL(this)";>
+        		</div>
+        		<div class="file-path-wrapper">
+          		<input class="file-path validate" type="text" placeholder="Select The Image You Want To Search With">
+        		</div>
+        		<div style="visibility: hidden" id="image_pic">
+        			<img id="simg" src="#" />
+        		</div>
+      	</div>
+      	<td><input type="submit" value="Get Recommendations" id="file_submit"></td>
+        </form>
+    </tr>
+    </table>
+  {% endif %}
+
+  <script>
+		function readURL(input) {
+	    	if (input.files && input.files[0]) {
+	            var reader = new FileReader();
+	            reader.onload = function (e) {
+	                $('#simg')
+	                    .attr('src', e.target.result)
+	            };
+	            document.getElementById('image_pic').style.visibility = "";
+	            reader.readAsDataURL(input.files[0]);
+	        }
+	    }
+  </script>
+{% endblock %}
