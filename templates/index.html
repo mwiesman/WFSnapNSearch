@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
   <nav>
-    <div class="nav-wrapper">
+    <div class="nav-wrapper purple lighten-1">
       <div class="col s12">
         <a class="breadcrumb"><i class="material-icons" style="padding-left:10px">home</i></a>
         <a class="breadcrumb">WF Snap N Search</a>
@@ -16,7 +16,7 @@
       <form action="{{url_for('main.main_route')}}" method="POST" enctype=multipart/form-data>
         <input type="hidden" name="op" value="img_search">
         <div class="file-field input-field">
-      		<div class="btn">
+      		<div class="btn blue-grey lighten-1">
         		<span>Select Photo <i class="material-icons">aspect_ratio</i></span>
         		<input type="file" name="pic" id="file_input" onchange="readURL(this)";>
       		</div>
@@ -31,7 +31,7 @@
       </form>
   </tr>
   <tr>
-  	<form action="url_for{{('recommender.rec_route')}}">
+  	<form action="{{url_for('recommender.rec_route')}}">
   		 <button class="waves-effect waves-light btn" type="submit">Check Out Our Recommender</button>
   	</form>
   </tr>

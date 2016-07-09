@@ -7,7 +7,7 @@ app = Flask(__name__, template_folder='templates')
 
 # Register the controllers
 app.register_blueprint(controllers.main, url_prefix='/wfsnapnsearch', static_url_path="static")
-app.register_blueprint(controllers.rec, url_prefix='/wfsnapnsearch', static_url_path="static")
+app.register_blueprint(controllers.recommender, url_prefix='/wfsnapnsearch', static_url_path="static")
 
 # Listen on external IPs
 # For us, listen to port 3006 so you can just run 'python app.py' to start the server

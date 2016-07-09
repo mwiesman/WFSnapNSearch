@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
   <nav>
-    <div class="nav-wrapper">
+    <div class="nav-wrapper purple lighten-1">
       <div class="col s12">
         <a class="breadcrumb"><i class="material-icons" style="padding-left:10px">home</i></a>
         <a href="{{url_for('main.main_route')}}" class="breadcrumb">WF Snap N Search</a>
         {% if options.recommend %}
           <a href="{{url_for('recommender.rec_route')}}" class="breadcrumb">Recommender</a>
-          <a class="breadcrumb">Reccomendations</a>
+          <a class="breadcrumb">Recommendations</a>
         {% else %}
           <a class="breadcrumb">Recommender</a>
         {% endif %}
@@ -16,12 +16,38 @@
   </nav>
 
   {% if options.recommend %}
-    {% for rec in rec_list %}
-      <a href="{{rec[1]}}"> Recommendended {{loc}} {{rec}} </a>
-    {% endfor %}
-    <form action="{{url_for('recommender.rec_route')}}">
-      <input type="submit" value="Return To Recommender">
-    </form>
+    <table>
+      <p> Recommended for {{locName}} {% if locName == "kids" %} room {% endif %}: </p>
+      {% if ownedObjs %}
+        <p> We noticed you already have a(n): </p>
+        <tr>
+          {% for obj in ownedObjs %}
+            <li>{{locname}} {{obj}}</li>
+          {% endfor %}
+        </tr>
+        {% if recList %}
+          <p> Why not check these other {{locName}} {% if locName == "kids" %} room {% endif %} items out: <p>
+        {% endif %}
+      {% endif %}
+      <tr>
+        {% for rec in recList %}
+          <li><a href="{{rec[1]}}"> {{locName}} {{rec[0]}} </a></li>
+        {% endfor %}
+      </tr>
+    
+    <p>
+      <form action="{{url_for('recommender.rec_route')}}">
+        <input type="submit" value="Return To Recommender">
+      </form>
+    </p>
+
+    Our system is not always correct. Here some other possibilities:
+    <tr>
+      {% for loc in otherLocPos %}
+        <li> {{loc}} {% if loc == "kids" %} room {% endif %} </li>
+      {% endfor %}
+    </tr>
+    </table>
   {% else %}
     <table>
     <tr>
@@ -29,7 +55,7 @@
         <form action="{{url_for('recommender.rec_rec_route')}}" method="POST" enctype=multipart/form-data >
           <input type="hidden" name="op" value="img_search">
           <div class="file-field input-field">
-        		<div class="btn">
+        		<div class="waves-effect waves-light btn blue-grey lighten-1">
           		<span>Select Photo <i class="material-icons">aspect_ratio</i></span>
           		<input type="file" name="pic" id="file_input" onchange="readURL(this)";>
         		</div>

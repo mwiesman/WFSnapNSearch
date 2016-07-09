@@ -1,6 +1,8 @@
 from flask import *
 import os
 
+#from neural_network.blackbox import WF_Vision as WFV
+
 recommender = Blueprint('recommender', __name__, template_folder='templates')
 
 @recommender.route('/recommender', methods=['GET', 'POST'])
@@ -11,7 +13,7 @@ def rec_route():
 
 	return render_template("recommender.html", options=options)
 
-@recommender.route('recommender/recommendations', methods=['GET', 'POST'])
+@recommender.route('/recommender/recommendations', methods=['GET', 'POST'])
 def rec_rec_route():
 	options = { 
         "recommend": True
@@ -19,6 +21,22 @@ def rec_rec_route():
 
 	validFormats = set(['png', 'jpg', 'bmp', 'gif'])
 	baseUrl = "http://www.wayfair.com/keyword.php?keyword="
+	locationRecs = {
+		"artstudio":["board", "toolbox", "easel", "pencil", "desk", "model", "brush", "bench", "smock", "paint"],
+		"bar":["cabinet", "stool", "chair", "rack", "tap", "cart", "table", "mirror", "glassware", "opener", "jigger", "serveware"],
+	 	"bathroom":["towel", "mat", "rug", "curtain", "sink", "faucet", "mirror", "shower", "tub", "toilet", "faucet", "bathrobe", "washcloth"],
+	  	"bedroom":["bed", "headboard", "nightstand", "dresser", "armoire", "pillow", "bench", "comforter", "blanket", "sheet", "quilt", "lamp", "mirror", "rug", "clock", "curtain"],
+	   	"children_room":["bed", "lamp", "rug", "light", "nightstand", "bookcase", "chair", "table", "bin", "toy", "tent"],
+	    "classroom":["table", "desk", "chair", "board", "screen", "podium", "organizer", "bookcase", "cart", "stand", "cubby", "shelf"],
+	    "dining_room":["table", "chair", "cabinet", "sideboard", "buffet", "stool", "bench", "chandelier", "cart", "art", "mirror", "candle", "tableware", "napkin", "vase", "coaster", "shaker", "ramekin", "cruet"],
+	    "gameroom":["table", "chair", "pool", "arcade", "sign", "dart", "stool", "couch", "rug", "speaker"],
+	    "garage":["rack", "shelf", "cabinet", "bin", "box", "workbench", "shed", "pegboard", "slatwall", "holder", "mat", "bag", "organizer"],
+    	"kitchen":["cutlery", "board", "spatula", "strainer", "peeler", "grater", "bakeware", "toaster", "machine", "appliance", "blender", "cookware", "rack", "can", "sink", "light", "fan", "island"],
+	    "livingroom":["chair", "table", "couch", "stand", "curtain", "rug", "pillow", "mirror", "ottoman", "lamp", "vase", "plant"],
+	    "meeting_room":[], #redirect to office
+	    "office":["table", "chair", "desk", "bookcase", "cabinet", "office", "mat", "lamp", "globe", "safe", "organizer"],
+	    "restaurant":[]
+	}
 	if (request.form.get("op") == "img_search"):
 	  	picFile = request.files.get("pic")
 	  	if picFile:
@@ -33,10 +51,41 @@ def rec_rec_route():
 	       	imagesFolder = os.path.abspath(os.path.join(curPath, os.pardir, relPath))
 	       	picFile.save(os.path.join(imagesFolder, filename))
 	       	# Send the file to the trained model
-	       	# loc = locationModel.recognize(filename)
-	       	# imgObjects = objectModel.recognize(filename)
-	       	# Look in dict[loc] for reccomended items
-	       	# pull out overlap with imgObjects
-	       	# store into recList a tuple (recommended item type (without location type), rec url)
+	       	#WFModel = WFV("static/images")
+	       	# List of possible locations recognized - first one has the highest accuracy
+	       	#locList = WFModel.recognize_scene(filename)
+	       	locList = ["children_room", "bedroom", "gameroom"] #testing
+	       	loc = locList[0]
+	       	# objects recognized in the photo
+	       	#imgObjects = WFModel.recognize_object(filename)
+	       	imgObjects = ["bed", "table"] #testing
+	       	
+	       	# Look in locationRecs[loc] for recommended items
+	       	if loc == "children_room":
+	       		locName = "kids"
+	       	elif loc == "dining_room":
+	       		locName = "dining room"
+	       	elif loc == "livingroom":
+	       		locName = "living room"
+	       	elif loc == "meeting_room":
+	       		loc = "office"
+	       		locName = "office"
+	       	elif loc == "restaurant":
+	       		loc = "dining_room"
+	       		locName = "dining room"
+	       	else:
+	       		locName = loc
 
-	return render_template("recommender.html", options=options, loc=loc, recList=recList)
+	       	# store into recList a tuple (recommended item type (without location type), rec url)
+	       	recList = []
+	       	ownedObjs = []
+	       	for rec in locationRecs[loc]:
+	       		# don't include overlap with imgObjects
+	       		if (rec not in imgObjects):
+	       			recList.append((rec, baseUrl + locName + "+" + rec))
+	       		else: #add them to items you already have
+	       			ownedObjs.append(rec)
+	       	return render_template("recommender.html", options=options, locName=locName, recList=recList, ownedObjs=ownedObjs, otherLocPos=locList[1:])
+	       		
+
+

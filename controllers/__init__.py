@@ -1,2 +1,2 @@
 from main import *
-from rec import *
+from recommender import *
