@@ -15,7 +15,8 @@ Setting Up
 
 ```
 1. Navigate to the main WFSnapNSearch directory
-2. run: pip install -r requirements.txt
+2. Make sure you have Caffe installed
+3. run: pip install -r requirements.txt
 	This should install all Modules necessary to run the project (if any are missing run pip install [module name] and please let us know)
 ```
 
