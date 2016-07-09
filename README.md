@@ -16,10 +16,11 @@ Setting Up
 ```
 1. Navigate to the main WFSnapNSearch directory
 2. Make sure you have Caffe installed
-3. Download the trained Caffe models from the Google Drive [Link](https://drive.google.com/open?id=0B-K2rtKjAgcNeHRlOFFtSlVkMUk)
+3. Download the trained Caffe models from the Google Drive Link Below
 4. run: pip install -r requirements.txt
 	This should install all Modules necessary to run the project (if any are missing run pip install [module name] and please let us know)
 ```
+[Trained Caffe Models Google Drive Link](https://drive.google.com/open?id=0B-K2rtKjAgcNeHRlOFFtSlVkMUk)
 
 -----------------------------------
 Launching the WFSnapNSearch Web App
