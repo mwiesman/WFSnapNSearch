@@ -11,8 +11,8 @@
   <table>
   <tr>
       <!-- add a photo action, need to get the photo uploaded -->
-      <form action="" method="POST" enctype=multipart/form-data>
-        <input type="hidden" op="img_search">
+      <form action="{{url_for('main.main_route')}}" method="POST" enctype=multipart/form-data>
+        <input type="hidden" name="op" value="img_search">
         <div class="file-field input-field">
       		<div class="btn">
         		<span>Select Photo <i class="material-icons">aspect_ratio</i></span>
@@ -25,7 +25,7 @@
       			<img id="simg" src="#" />
       		</div>
     	</div>
-    	<td><input class="waves-effect waves-light btn right" style="font-weight:normal" type="submit" value="Search" id="file_submit"></td>
+    	<td><input style="font-weight:normal" type="submit" value="Search" id="file_submit"></td>
       </form>
   </tr>
   </table>
