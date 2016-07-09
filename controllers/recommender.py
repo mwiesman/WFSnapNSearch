@@ -49,15 +49,15 @@ def rec_rec_route():
 	       	curPath = os.path.dirname(__file__)
 	       	relPath = "static/images"
 	       	imagesFolder = os.path.abspath(os.path.join(curPath, os.pardir, relPath))
-	       	picFile.save(os.path.join(imagesFolder, filename))
+	       	picFile.save(os.path.join(imagesFolder, "target_image.jpg"))
 	       	# Send the file to the trained model
 	       	#WFModel = WFV("static/images")
 	       	# List of possible locations recognized - first one has the highest accuracy
-	       	#locList = WFModel.recognize_scene(filename)
+	       	#locList = WFModel.recognize_scene()
 	       	locList = ["children_room", "bedroom", "gameroom"] #testing
 	       	loc = locList[0]
 	       	# objects recognized in the photo
-	       	#imgObjects = WFModel.recognize_object(filename)
+	       	#imgObjects = WFModel.recognize_object()
 	       	imgObjects = ["bed", "table"] #testing
 	       	
 	       	# Look in locationRecs[loc] for recommended items

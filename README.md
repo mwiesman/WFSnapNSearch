@@ -16,7 +16,7 @@ Setting Up
 ```
 1. Navigate to the main WFSnapNSearch directory
 2. Make sure you have Caffe installed
-3. Download the trained Caffe models from the Google Drive Link Below and put them in the neural_network directory
+3. Download the trained Caffe models from the Google Drive Link Below and put them in the neural_network directory (as specified by the neural_network README.md file)
 4. run: pip install -r requirements.txt
 	This should install all Modules necessary to run the project (if any are missing run pip install [module name] and please let us know)
 ```
