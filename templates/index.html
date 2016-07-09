@@ -8,8 +8,10 @@
       </div>
     </div>
   </nav>
+
   <table>
   <tr>
+  	<!--  -->
       <!-- add a photo action, need to get the photo uploaded -->
       <form action="{{url_for('main.main_route')}}" method="POST" enctype=multipart/form-data>
         <input type="hidden" name="op" value="img_search">
@@ -25,8 +27,13 @@
       			<img id="simg" src="#" />
       		</div>
     	</div>
-    	<td><input style="font-weight:normal" type="submit" value="Search" id="file_submit"></td>
+    	<td><input disabled class="btn disabled" style="font-weight:normal" type="submit" value="Search" id="file_submit"><i class="material-icons">not_interested</i></td>
       </form>
+  </tr>
+  <tr>
+  	<form action="url_for{{('recommender.rec_route')}}">
+  		 <button class="waves-effect waves-light btn" type="submit">Check Out Our Recommender</button>
+  	</form>
   </tr>
   </table>
 

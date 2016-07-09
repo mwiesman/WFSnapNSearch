@@ -1,5 +1,5 @@
 # WFSnapNSearch
-Snap N' Search: An upholstered way to search (home goods including upholstery) using a quick snapshot photo.
+Snap N' Search: An upholstered way to search (home goods including upholstery) (and find reccomendations) using a quick snapshot photo.
 
 + Author: Mathew Wiesman
 + Author: Tianchu (Alex) Liang
@@ -7,7 +7,7 @@ Snap N' Search: An upholstered way to search (home goods including upholstery) u
 
 ## About WFSnapNSearch
 
-WFSnapNSearch was created as a project for the Wayfair hackathon. The project goal was to train a neural network model on specifically Wayfair data to be used for image recognition and searching. The user could then provide an image of some product (whether it be a photo they had taken or one from online) to our project and the model would be able to determine as much about the image that would be relevant to find similar products on Wayfair.com. The information determined by the model would then be sent as a search query to Wayfair.com resulting in a "search by image" functionality.
+WFSnapNSearch was created as a project for the Wayfair hackathon. Our current project is built as a reccomendation system for products based on your location. Using trained neural networks we will first determine the location in which the photo was taken and second determine the objects in the photo. These objects will compared with a reccomendation list based off the determined location. The objects that are missing from the list are then presented as links to Wayfair.com.
 
 --------------------
 Setting Up
@@ -26,10 +26,20 @@ To run the WFSnapNSearch application:
 ```
 1. Navigate to the main WFSnapNSearch directory 
 2. run: python app.py
-3. Open your preffered browser and navigate to http://localhost:3006/wfsnapnsearch/
-4. Upload your photo of the home good you wish to search
-5. Be amazed as the closest product to the product you always wanted is available for you to purchase
+For getting reccomendations on what itmes would go great in your location follow the 'b':
+3b. Open your preferred browser and navigate to http://localhost:3006/wfsnapnsearch/reccomender
+4b. Upload your photo of the room you'd like reccomendations for
+5b. Bask in the glory of the products that will soon complement your room
+For searching by photo (currently unavailable) follow the 'a':
+3a. Open your preferred browser and navigate to http://localhost:3006/wfsnapnsearch/
+4a. Upload your photo of the home good you wish to search
+5a. Be amazed as the closest product to the product you always wanted is available for you to purchase 
 ```
+
+----------------------------------
+Original (possibly future) Vision
+------------------------------------
+The project goal was to train a neural network model on specifically Wayfair data to be used for image recognition and searching. The user could then provide an image of some product (whether it be a photo they had taken or one from online) to our project and the model would be able to determine as much about the image that would be relevant to find similar products on Wayfair.com. The information determined by the model would then be sent as a search query to Wayfair.com resulting in a "search by image" functionality.
 
 ----------
 Notes
