@@ -35,13 +35,13 @@
         {% endfor %}
       </tr>
     
-    <p class="flow-text">
-      <form action="{{url_for('recommender.rec_route')}}">
-        <input type="submit" value="Return To Recommender">
+    <p>
+      <form action="{{url_for('recommender.rec_route')}}" id="return_to_rec_form">
+        <button class="waves-effect waves-light btn blue-grey lighten-1" type="submit" form="return_to_rec_form">Return To Recommender</button>
       </form>
     </p>
 
-    Our system is not always correct. Here some other possibilities:
+    <p class="flow-text"> Our system is not always correct. Here are some other possibilities: </p>
     <tr>
       {% for loc in otherLocPos %}
         <p style="border: 2px; margin: 10px;" class=chip> {{loc}} {% if loc == "kids" %} room {% endif %} </p>
@@ -52,7 +52,7 @@
     <table>
     <tr>
         <!-- add a photo action, need to get the photo uploaded -->
-        <form action="{{url_for('recommender.rec_rec_route')}}" method="POST" enctype=multipart/form-data >
+        <form action="{{url_for('recommender.rec_rec_route')}}" method="POST" enctype=multipart/form-data id="get_rec_form">
           <input type="hidden" name="op" value="img_search">
           <div class="file-field input-field">
         		<div class="waves-effect waves-light btn blue-grey lighten-1">
@@ -66,16 +66,28 @@
         			<img id="simg" src="#" />
         		</div>
       	</div>
-      	<td><input type="submit" value="Get Recommendations" id="file_submit" onclick="showLoaders()";></td>
+      	<!-- <td><input type="submit" value="Get Recommendations" id="file_submit" onclick="showLoaders()";></td> -->
+            <td> <button class="waves-effect waves-light btn blue-grey lighten-1" type="submit" form="get_rec_form" id="file_submit" onclick="showCircleLoader()";>Get Recommendations</td>
         </form>
     </tr>
     </table>
-    <div id="loading_circles">
+
+    <div id="loading_section">
+      <div id="pic_ready_bar"> </div>
+      <div id="loading_circles"> </div>
     </div>
   {% endif %}
 
   <script>
-		function readURL(input) {
+		function showPicReady() {
+      document.getElementById('pic_ready_bar').innerHTML =
+       '<div class="progress"> <div class="indeterminate"></div></div>';
+     }
+    function showCircleLoader() {
+      document.getElementById('loading_circles').innerHTML = '<div class="preloader-wrapper big active"><div class="spinner-layer spinner-blue"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-red"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-yellow"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div><div class="spinner-layer spinner-green"><div class="circle-clipper left"><div class="circle"></div></div><div class="gap-patch"><div class="circle"></div></div><div class="circle-clipper right"><div class="circle"></div></div></div></div>';
+    }
+
+    function readURL(input) {
 	    	if (input.files && input.files[0]) {
 	            var reader = new FileReader();
 	            reader.onload = function (e) {
@@ -86,39 +98,11 @@
 
 	            };
 	            document.getElementById('image_pic').style.visibility = "";
+              showPicReady();
 	            reader.readAsDataURL(input.files[0]);
 	        }
 	    }
+
   </script>
 
-  <script>
-    function showLoaders() {
-      document.getElementById('loading_circles').innerHTML = "
-      <div class="preloader-wrapper active">
-        <div class="spinner-layer spinner-blue">
-          <div class="gap-patch">
-            <div class="circle"></div>
-          </div>
-        </div>
-
-        <div class="spinner-layer spinner-red">
-          <div class="gap-patch">
-            <div class="circle"></div>
-          </div>
-        </div>
-
-        <div class="spinner-layer spinner-yellow">
-          <div class="gap-patch">
-            <div class="circle"></div>
-          </div>
-        </div>
-
-        <div class="spinner-layer spinner-green">
-          <div class="gap-patch">
-            <div class="circle"></div>
-          </div>
-        </div>
-    </div>"
-    }
-  </script>
 {% endblock %}

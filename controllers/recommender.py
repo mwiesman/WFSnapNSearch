@@ -54,7 +54,7 @@ def rec_rec_route():
 	       	WFModel = WFV("static/image")
 	       	# List of possible locations recognized - first one has the highest accuracy
 	       	locList = WFModel.recognize_scene()
-	       	#locList = ["children_room", "bedroom", "gameroom"] #testing
+	       	#locList = ["children_room", "bedroom", "gameroom", "testing"] #testing
 	       	loc = locList[0]
 	       	# objects recognized in the photo
 	       	imgObjects = WFModel.recognize_objects()

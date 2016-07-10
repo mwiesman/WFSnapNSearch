@@ -1,3 +1,3 @@
 
 
-console.log("Hello, EECS485")
+console.log("WFSnapNSearch")
