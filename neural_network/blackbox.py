@@ -50,14 +50,25 @@ objects = np.asarray(['aeroplane',
 
 class WF_Vision:
 
-	def __init__(self):
-		self.img_path = '/Users/tianchuliang/Documents/Projects/wf_hackathon/WFSnapNSearch/static/image/target_image.jpg'
-		self.scene_model_weights = '/Users/tianchuliang/Documents/Projects/wf_hackathon/WFSnapNSearch/neural_network/scene_net/scene_net_snapshot_iter_1000.caffemodel'
-		self.scene_model_def = '/Users/tianchuliang/Documents/Projects/wf_hackathon/WFSnapNSearch/neural_network/scene_net/deploy.prototxt'
-		self.object_model_weights = '/Users/tianchuliang/Documents/Projects/wf_hackathon/WFSnapNSearch/neural_network/object_net/snapshot_iter_258.caffemodel'
-		self.object_model_def = '/Users/tianchuliang/Documents/Projects/wf_hackathon/WFSnapNSearch/neural_network/object_net/deploy.prototxt'
+	def __init__(self,img_path):
+		local_root = '/Users/tianchuliang/Documents/Projects/wf_hackathon/WFSnapNSearch/neural_network'
+		curPath = os.path.dirname(__file__)
+		relPath_scene = "neural_network/scene_net"
+		relPath_object = "neural_network/object_net"
+
+		scene_path = os.path.abspath(os.path.join(curPath, os.pardir, relPath_scene))
+		object_path = os.path.abspath(os.path.join(curPath, os.pardir, relPath_object))
+		
+		self.img_path = img_path+'/target_image.jpg'
+		
+		self.scene_model_weights = scene_path+'/scene_net_snapshot_iter_1000.caffemodel'
+		self.scene_model_def = scene_path+ '/deploy.prototxt'
+		
+		self.object_model_weights = object_path+'/snapshot_iter_258.caffemodel'
+		self.object_model_def = object_path+'/deploy.prototxt'
 
 	def recognize_scene(self):
+
 		deployed_net = caffe.Net(
     	self.scene_model_def,
     	self.scene_model_weights,

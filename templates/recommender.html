@@ -22,7 +22,7 @@
         <p class="flow-text"> We noticed you already have a(n): </p>
         <tr>
           {% for obj in ownedObjs %}
-            <li>{{locname}} {{obj}}</li>
+            <p style="border: 2px; margin: 10px;" class=chip>{{locname}} {{obj}}</p>
           {% endfor %}
         </tr>
         {% if recList %}
@@ -31,7 +31,7 @@
       {% endif %}
       <tr>
         {% for rec in recList %}
-          <li><a href="{{rec[1]}}"> {{locName}} {{rec[0]}} </a></li>
+          <p style="border: 2px; margin: 10px;" class=chip><a href="{{rec[1]}}"> {{locName}} {{rec[0]}} </a></p>
         {% endfor %}
       </tr>
     
@@ -44,7 +44,7 @@
     Our system is not always correct. Here some other possibilities:
     <tr>
       {% for loc in otherLocPos %}
-        <li> {{loc}} {% if loc == "kids" %} room {% endif %} </li>
+        <p style="border: 2px; margin: 10px;" class=chip> {{loc}} {% if loc == "kids" %} room {% endif %} </p>
       {% endfor %}
     </tr>
     </table>

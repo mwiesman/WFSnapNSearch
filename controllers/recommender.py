@@ -1,7 +1,7 @@
 from flask import *
 import os
 
-#from neural_network.blackbox import WF_Vision as WFV
+from neural_network.blackbox import WF_Vision as WFV
 
 recommender = Blueprint('recommender', __name__, template_folder='templates')
 
@@ -47,18 +47,18 @@ def rec_rec_route():
 	  			abort(404)
 	       	# save the uploaded image so we can send it to the model
 	       	curPath = os.path.dirname(__file__)
-	       	relPath = "static/images"
+	       	relPath = "static/image"
 	       	imagesFolder = os.path.abspath(os.path.join(curPath, os.pardir, relPath))
 	       	picFile.save(os.path.join(imagesFolder, "target_image.jpg"))
 	       	# Send the file to the trained model
-	       	#WFModel = WFV("static/images")
+	       	WFModel = WFV("static/image")
 	       	# List of possible locations recognized - first one has the highest accuracy
-	       	#locList = WFModel.recognize_scene()
-	       	locList = ["children_room", "bedroom", "gameroom"] #testing
+	       	locList = WFModel.recognize_scene()
+	       	#locList = ["children_room", "bedroom", "gameroom"] #testing
 	       	loc = locList[0]
 	       	# objects recognized in the photo
-	       	#imgObjects = WFModel.recognize_object()
-	       	imgObjects = ["bed", "table"] #testing
+	       	imgObjects = WFModel.recognize_objects()
+	       	#imgObjects = ["bed", "table"] #testing
 	       	# Look in locationRecs[loc] for recommended items
 	       	if loc == "children_room":
 	       		locName = "kids"
