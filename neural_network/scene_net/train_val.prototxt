@@ -7,19 +7,19 @@ layer {
   include {
     phase: TRAIN
   }
-  transform_param {
-    mirror: true
-    crop_size: 227
-    mean_file: "data/ilsvrc12/imagenet_mean.binaryproto"
-  }
-# mean pixel / channel-wise mean instead of mean image
 #  transform_param {
-#    crop_size: 227
-#    mean_value: 104
-#    mean_value: 117
-#    mean_value: 123
 #    mirror: true
+#    crop_size: 227
+#    mean_file: "data/ilsvrc12/imagenet_mean.binaryproto"
 #  }
+# mean pixel / channel-wise mean instead of mean image
+  transform_param {
+    crop_size: 227
+    mean_value: 104
+    mean_value: 117
+    mean_value: 123
+    mirror: true
+  }
   data_param {
     source: "/mnt/indoor_scene_images/Train/scene_train_lmdb"
     batch_size: 256
@@ -34,21 +34,21 @@ layer {
   include {
     phase: TEST
   }
-  transform_param {
-    mirror: false
-    crop_size: 227
-    mean_file: "data/ilsvrc12/imagenet_mean.binaryproto"
-  }
-# mean pixel / channel-wise mean instead of mean image
 #  transform_param {
-#    crop_size: 227
-#    mean_value: 104
-#    mean_value: 117
-#    mean_value: 123
 #    mirror: false
+#    crop_size: 227
+#    mean_file: "data/ilsvrc12/imagenet_mean.binaryproto"
 #  }
+# mean pixel / channel-wise mean instead of mean image
+  transform_param {
+    crop_size: 227
+    mean_value: 104
+    mean_value: 117
+    mean_value: 123
+    mirror: false
+  }
   data_param {
-    source: "/mnt/indoor_scene_images/Train/scene_train_lmdb"
+    source: "/mnt/indoor_scene_images/Test/scene_test_lmdb"
     batch_size: 50
     backend: LMDB
   }
@@ -59,11 +59,11 @@ layer {
   bottom: "data"
   top: "conv1"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 2
+    lr_mult: 0
     decay_mult: 0
   }
   convolution_param {
@@ -114,11 +114,11 @@ layer {
   bottom: "norm1"
   top: "conv2"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 2
+    lr_mult: 0
     decay_mult: 0
   }
   convolution_param {
@@ -170,11 +170,11 @@ layer {
   bottom: "norm2"
   top: "conv3"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 2
+    lr_mult: 0
     decay_mult: 0
   }
   convolution_param {
@@ -203,11 +203,11 @@ layer {
   bottom: "conv3"
   top: "conv4"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 2
+    lr_mult: 0
     decay_mult: 0
   }
   convolution_param {
@@ -237,11 +237,11 @@ layer {
   bottom: "conv4"
   top: "conv5"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 0
+    decay_mult: 0
   }
   param {
-    lr_mult: 2
+    lr_mult: 0
     decay_mult: 0
   }
   convolution_param {
@@ -277,12 +277,12 @@ layer {
   }
 }
 layer {
-  name: "fc6"
+  name: "fc6_scene"
   type: "InnerProduct"
   bottom: "pool5"
-  top: "fc6"
+  top: "fc6_scene"
   param {
-    lr_mult: 1
+    lr_mult: 2
     decay_mult: 1
   }
   param {
@@ -304,25 +304,25 @@ layer {
 layer {
   name: "relu6"
   type: "ReLU"
-  bottom: "fc6"
-  top: "fc6"
+  bottom: "fc6_scene"
+  top: "fc6_scene"
 }
 layer {
   name: "drop6"
   type: "Dropout"
-  bottom: "fc6"
-  top: "fc6"
+  bottom: "fc6_scene"
+  top: "fc6_scene"
   dropout_param {
-    dropout_ratio: 0.5
+    dropout_ratio: 0.25
   }
 }
 layer {
-  name: "fc7"
+  name: "fc7_scene"
   type: "InnerProduct"
-  bottom: "fc6"
-  top: "fc7"
+  bottom: "fc6_scene"
+  top: "fc7_scene"
   param {
-    lr_mult: 1
+    lr_mult: 2
     decay_mult: 1
   }
   param {
@@ -344,25 +344,25 @@ layer {
 layer {
   name: "relu7"
   type: "ReLU"
-  bottom: "fc7"
-  top: "fc7"
+  bottom: "fc7_scene"
+  top: "fc7_scene"
 }
 layer {
   name: "drop7"
   type: "Dropout"
-  bottom: "fc7"
-  top: "fc7"
+  bottom: "fc7_scene"
+  top: "fc7_scene"
   dropout_param {
-    dropout_ratio: 0.5
+    dropout_ratio: 0.25
   }
 }
 layer {
-  name: "fc8"
+  name: "fc8_scene"
   type: "InnerProduct"
-  bottom: "fc7"
-  top: "fc8"
+  bottom: "fc7_scene"
+  top: "fc8_scene"
   param {
-    lr_mult: 1
+    lr_mult: 2
     decay_mult: 1
   }
   param {
@@ -370,7 +370,7 @@ layer {
     decay_mult: 0
   }
   inner_product_param {
-    num_output: 1000
+    num_output: 14
     weight_filler {
       type: "gaussian"
       std: 0.01
@@ -384,7 +384,7 @@ layer {
 layer {
   name: "accuracy"
   type: "Accuracy"
-  bottom: "fc8"
+  bottom: "fc8_scene"
   bottom: "label"
   top: "accuracy"
   include {
@@ -394,7 +394,7 @@ layer {
 layer {
   name: "loss"
   type: "SoftmaxWithLoss"
-  bottom: "fc8"
+  bottom: "fc8_scene"
   bottom: "label"
   top: "loss"
 }

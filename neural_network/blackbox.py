@@ -61,10 +61,10 @@ class WF_Vision:
 		
 		self.img_path = img_path+'/target_image.jpg'
 		
-		self.scene_model_weights = scene_path+'/scene_net_snapshot_iter_1000.caffemodel'
+		self.scene_model_weights = scene_path+'/scene_net_snapshot_iter_1000_new.caffemodel'
 		self.scene_model_def = scene_path+ '/deploy.prototxt'
 		
-		self.object_model_weights = object_path+'/snapshot_iter_258.caffemodel'
+		self.object_model_weights = object_path+'/object_net_snapshot_iter_600.caffemodel'
 		self.object_model_def = object_path+'/deploy.prototxt'
 
 	def recognize_scene(self):
