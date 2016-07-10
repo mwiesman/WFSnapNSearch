@@ -50,21 +50,21 @@ objects = np.asarray(['aeroplane',
 
 class WF_Vision:
 
-	def __init__(self, img_path):
-		self.img_path = img_path
+	def __init__(self):
+		self.img_path = '/Users/tianchuliang/Documents/Projects/wf_hackathon/WFSnapNSearch/static/image/target_image.jpg'
 		self.scene_model_weights = '/Users/tianchuliang/Documents/Projects/wf_hackathon/WFSnapNSearch/neural_network/scene_net/scene_net_snapshot_iter_1000.caffemodel'
 		self.scene_model_def = '/Users/tianchuliang/Documents/Projects/wf_hackathon/WFSnapNSearch/neural_network/scene_net/deploy.prototxt'
 		self.object_model_weights = '/Users/tianchuliang/Documents/Projects/wf_hackathon/WFSnapNSearch/neural_network/object_net/snapshot_iter_258.caffemodel'
 		self.object_model_def = '/Users/tianchuliang/Documents/Projects/wf_hackathon/WFSnapNSearch/neural_network/object_net/deploy.prototxt'
 
-	def recognize_scene(self, img_name):
+	def recognize_scene(self):
 		deployed_net = caffe.Net(
     	self.scene_model_def,
     	self.scene_model_weights,
     	caffe.TEST
 		)
 
-		test_img=mpimg.imread(self.img_path+'/'+img_name)
+		test_img=mpimg.imread(self.img_path)
 
 		transformer = caffe.io.Transformer({'data': deployed_net.blobs['data'].data.shape})
 		transformer.set_transpose('data', (2,0,1))  # move image channels to outermost dimension
@@ -78,14 +78,14 @@ class WF_Vision:
 
 		return scenes[output['prob'][0].argsort()[::-1]][:3].tolist()
 
-	def recognize_objects(self, img_name):
+	def recognize_objects(self):
 		deployed_net = caffe.Net(
 			self.object_model_def,
 			self.object_model_weights,
 			caffe.TEST
 			)
 
-		test_img=mpimg.imread(self.img_path+'/'+img_name)
+		test_img=mpimg.imread(self.img_path)
 
 		transformer = caffe.io.Transformer({'data': deployed_net.blobs['data'].data.shape})
 		transformer.set_transpose('data', (2,0,1))  # move image channels to outermost dimension
@@ -100,7 +100,7 @@ class WF_Vision:
 		return objects[np.where(output['score'][0]>0)[0]].tolist() 
 
 if __name__ == "__main__":
-	wf_v = WF_Vision('/Users/tianchuliang/Desktop')
-	print wf_v.recognize_scene('test_kitchen.jpg')
-	# print wf_v.recognize_objects('test_living_room_1.jpg')
+	wf_v = WF_Vision()
+	# print wf_v.recognize_scene()
+	# print wf_v.recognize_objects()
 
