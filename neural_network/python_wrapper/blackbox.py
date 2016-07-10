@@ -52,10 +52,10 @@ class WF_Vision:
 
 	def __init__(self, img_path):
 		self.img_path = img_path
-		self.scene_model_weights = '/Users/tianchuliang/Documents/Projects/wayfair_hackathon/scene_net/scene_net_snapshot_iter_1000.caffemodel'
-		self.scene_model_def = '/Users/tianchuliang/Documents/Projects/wayfair_hackathon/scene_net/deploy.prototxt'
-		self.object_model_weights = caffe_root + 'examples/pascal_multilabel_with_datalayer/snapshot_iter_258.caffemodel'
-		self.object_model_def = caffe_root + 'examples/pascal_multilabel_with_datalayer/deploy.prototxt'
+		self.scene_model_weights = '/Users/tianchuliang/Documents/Projects/wf_hackathon/WFSnapNSearch/neural_network/scene_net/scene_net_snapshot_iter_1000.caffemodel'
+		self.scene_model_def = '/Users/tianchuliang/Documents/Projects/wf_hackathon/WFSnapNSearch/neural_network/scene_net/deploy.prototxt'
+		self.object_model_weights = '/Users/tianchuliang/Documents/Projects/wf_hackathon/WFSnapNSearch/neural_network/object_net/snapshot_iter_258.caffemodel'
+		self.object_model_def = '/Users/tianchuliang/Documents/Projects/wf_hackathon/WFSnapNSearch/neural_network/object_net/deploy.prototxt'
 
 	def recognize_scene(self, img_name):
 		deployed_net = caffe.Net(
@@ -101,6 +101,6 @@ class WF_Vision:
 
 if __name__ == "__main__":
 	wf_v = WF_Vision('/Users/tianchuliang/Desktop')
-	# print wf_v.recognize_scene('test_kitchen.jpg')
-	print wf_v.recognize_objects('test_living_room_1.jpg')
+	print wf_v.recognize_scene('test_kitchen.jpg')
+	# print wf_v.recognize_objects('test_living_room_1.jpg')
 
