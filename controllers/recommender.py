@@ -59,7 +59,6 @@ def rec_rec_route():
 	       	# objects recognized in the photo
 	       	#imgObjects = WFModel.recognize_object()
 	       	imgObjects = ["bed", "table"] #testing
-	       	
 	       	# Look in locationRecs[loc] for recommended items
 	       	if loc == "children_room":
 	       		locName = "kids"

@@ -17,16 +17,16 @@
 
   {% if options.recommend %}
     <table>
-      <p> Recommended for {{locName}} {% if locName == "kids" %} room {% endif %}: </p>
+      <p class="flow-text"> Recommended for {{locName}} {% if locName == "kids" %} room {% endif %}: </p>
       {% if ownedObjs %}
-        <p> We noticed you already have a(n): </p>
+        <p class="flow-text"> We noticed you already have a(n): </p>
         <tr>
           {% for obj in ownedObjs %}
             <li>{{locname}} {{obj}}</li>
           {% endfor %}
         </tr>
         {% if recList %}
-          <p> Why not check these other {{locName}} {% if locName == "kids" %} room {% endif %} items out: <p>
+          <p class="flow-text"> Why not check these other {{locName}} {% if locName == "kids" %} room {% endif %} items out: </p>
         {% endif %}
       {% endif %}
       <tr>
@@ -35,7 +35,7 @@
         {% endfor %}
       </tr>
     
-    <p>
+    <p class="flow-text">
       <form action="{{url_for('recommender.rec_route')}}">
         <input type="submit" value="Return To Recommender">
       </form>
@@ -66,10 +66,12 @@
         			<img id="simg" src="#" />
         		</div>
       	</div>
-      	<td><input type="submit" value="Get Recommendations" id="file_submit"></td>
+      	<td><input type="submit" value="Get Recommendations" id="file_submit" onclick="showLoaders()";></td>
         </form>
     </tr>
     </table>
+    <div id="loading_circles">
+    </div>
   {% endif %}
 
   <script>
@@ -84,5 +86,36 @@
 	            reader.readAsDataURL(input.files[0]);
 	        }
 	    }
+  </script>
+
+  <script>
+    function showLoaders() {
+      document.getElementById('loading_circles').innerHTML = "
+      <div class="preloader-wrapper active">
+        <div class="spinner-layer spinner-blue">
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+        </div>
+
+        <div class="spinner-layer spinner-red">
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+        </div>
+
+        <div class="spinner-layer spinner-yellow">
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+        </div>
+
+        <div class="spinner-layer spinner-green">
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+        </div>
+    </div>"
+    }
   </script>
 {% endblock %}
