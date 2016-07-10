@@ -81,6 +81,9 @@
 	            reader.onload = function (e) {
 	                $('#simg')
 	                    .attr('src', e.target.result)
+                      .width(227)
+                      .height(227)
+
 	            };
 	            document.getElementById('image_pic').style.visibility = "";
 	            reader.readAsDataURL(input.files[0]);
