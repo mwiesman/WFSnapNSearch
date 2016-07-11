@@ -86,6 +86,7 @@ class WF_Vision:
 		deployed_net.blobs['data'].data[...] = transformed_image
 		
 		output = deployed_net.forward()
+		print output['prob'][0]
 
 		return scenes[output['prob'][0].argsort()[::-1]][:3].tolist()
 
@@ -110,8 +111,8 @@ class WF_Vision:
 
 		return objects[np.where(output['score'][0]>0)[0]].tolist() 
 
-if __name__ == "__main__":
-	wf_v = WF_Vision()
-	# print wf_v.recognize_scene()
+# if __name__ == "__main__":
+	# wf_v = WF_Vision('/Users/tianchuliang/Desktop')
+	# # print wf_v.recognize_scene()
 	# print wf_v.recognize_objects()
 
