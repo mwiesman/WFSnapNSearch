@@ -2,5 +2,3 @@
 */.DS_Store
 neural_network/object_net/*.caffemodel
 neural_network/scene_net/*.caffemodel
-controllers/*.pyc
-neural_network/*.pyc
