@@ -7,7 +7,7 @@ Snap N' Search: An upholstered way to search (home goods including upholstery) (
 
 ## About WFSnapNSearch
 
-WFSnapNSearch was created as a project for the Wayfair hackathon. Our current project is built as a recommendation system for products based on your location. Using trained neural networks we will determine the location in which the photo was taken and then present a list of recommended items to the user as links to Wayfair.com. When dealing with recommendations we also determine some of the objects in the photo. These objects will compared with a recommendation list based off the determined location. The objects that are missing from the list are then presented as links to Wayfair.com.
+WFSnapNSearch was created as a project for the Wayfair hackathon. Our current project is built as a recommendation system for products based on your location. We trained two neural networks to  determine the location in which the photo was taken and then present a list of recommended items to the user as links to Wayfair.com. When dealing with recommendations we also determine some of the objects in the photo. These objects will compared with a recommendation list based off the determined location. The objects that are missing from the list are then presented as links to Wayfair.com.
 
 --------------------
 Setting Up
